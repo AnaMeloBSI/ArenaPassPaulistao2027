@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArenaPass — Paulistão 2027</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-dark px-3 py-2" style="background-color: #0b1e3b;">
+    <div class="container-fluid">
+      <div>
+        <span class="navbar-brand fw-bold mb-0">// PAULISTÃO 2027</span>
+        <small class="text-white-50 d-block" style="font-size: 0.75rem;">Dados de demonstração</small>
+      </div>
+      <span class="badge rounded-pill bg-success-subtle text-success border border-success px-3 py-2">
+        ● Sessão ativa
+      </span>
+    </div>
+  </nav>
+
+  <main class="container-fluid py-4">
+    <div class="row g-4">
+
+      <div class="col-lg-6" id="coluna-torcedor">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #16428c;">
+            <span><i class="bi bi-person-circle me-2"></i><strong>Visão do Torcedor</strong></span>
+            <ul class="nav nav-pills card-header-pills small">
+              <li class="nav-item"><a class="nav-link active bg-white text-primary py-1 px-2" href="#">Ingressos</a></li>
+              <li class="nav-item"><a class="nav-link text-white py-1 px-2" href="#">Partidas</a></li>
+              <li class="nav-item"><a class="nav-link text-white py-1 px-2" href="#">Minha conta</a></li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <div class="p-3 rounded text-white mb-3" style="background: linear-gradient(90deg, #0b1e3b, #16428c);">
+              <span class="badge bg-warning text-dark mb-2">Alta demanda</span>
+              <h5 class="fw-bold mb-0">// Palmeiras × Corinthians</h5>
+              <small class="text-white-50">Allianz Parque • Domingo, 16:00</small>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-7">
+                <label for="select-setor" class="form-label fw-semibold small">Setor</label>
+                <select id="select-setor" class="form-select">
+                  <option value="120" selected>Cadeira inferior — R$ 120,00</option>
+                  <option value="80">Arquibancada — R$ 80,00</option>
+                  <option value="160">Cadeira superior — R$ 160,00</option>
+                </select>
+              </div>
+              <div class="col-md-5">
+                <label for="select-qtd" class="form-label fw-semibold small">Quantidade</label>
+                <select id="select-qtd" class="form-select">
+                  <option value="1" selected>1 ingresso</option>
+                  <option value="2">2 ingressos</option>
+                  <option value="3">3 ingressos</option>
+                  <option value="4">4 ingressos</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="alert alert-primary d-flex justify-content-between align-items-center mb-3" role="alert">
+              <div>
+                <i class="bi bi-lock-fill me-2"></i>
+                <strong>Preço reservado</strong> — Válido por 5 minutos
+              </div>
+              <span id="timer-reserva" class="badge bg-primary fs-6 font-monospace">04:59</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center border-top pt-3">
+              <div>
+                <small class="text-muted d-block">Total a pagar <span id="badge-ajuste-ativo" class="badge bg-info text-dark d-none"></span></small>
+                <span id="valor-total" class="fs-4 fw-bold text-dark">Total: R$ 120,00</span>
+              </div>
+              <button id="btn-ir-pagamento" class="btn btn-primary btn-lg px-4">
+                Ir para pagamento
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6" id="coluna-gestor">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #16428c;">
+            <span><i class="bi bi-building me-2"></i><strong>Visão do Gestor</strong></span>
+            <ul class="nav nav-pills card-header-pills small">
+              <li class="nav-item"><a class="nav-link active bg-white text-primary py-1 px-2" href="#">Gestão de arenas</a></li>
+              <li class="nav-item"><a class="nav-link text-white py-1 px-2" href="#">Relatórios</a></li>
+              <li class="nav-item"><a class="nav-link text-white py-1 px-2" href="#">Configurações</a></li>
+            </ul>
+          </div>
+
+          <div class="card-body">
+            <div class="row g-3 mb-4">
+              <div class="col-sm-5">
+                <div class="card border-0 bg-light h-100 p-3">
+                  <span class="text-muted small fw-semibold">Ocupação Atual</span>
+                  <div class="d-flex align-items-baseline gap-2 mt-1">
+                    <span id="kpi-ocupacao" class="display-6 fw-bold text-danger">72%</span>
+                    <span class="badge bg-danger-subtle text-danger">Alta</span>
+                  </div>
+                  <small class="text-muted mt-2">Meta operacional: 80%</small>
+                </div>
+              </div>
+
+              <div class="col-sm-7">
+                <div class="card border-0 bg-light h-100 p-3">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <span class="text-muted small fw-semibold">Ingressos vendidos</span>
+                      <h3 id="kpi-vendidos" class="fw-bold text-primary mb-0">18.450</h3>
+                    </div>
+                    <span class="badge bg-primary-subtle text-primary">+14% hoje</span>
+                  </div>
+
+                  <div class="d-flex align-items-end gap-2 mt-3" style="height: 55px;" aria-label="Gráfico de crescimento de vendas">
+                    <div class="bg-primary opacity-25 rounded-top flex-fill" style="height: 30%;" title="Seg"></div>
+                    <div class="bg-primary opacity-50 rounded-top flex-fill" style="height: 45%;" title="Ter"></div>
+                    <div class="bg-primary opacity-50 rounded-top flex-fill" style="height: 60%;" title="Qua"></div>
+                    <div class="bg-primary opacity-75 rounded-top flex-fill" style="height: 75%;" title="Qui"></div>
+                    <div class="bg-primary opacity-75 rounded-top flex-fill" style="height: 88%;" title="Sex"></div>
+                    <div class="bg-primary rounded-top flex-fill" style="height: 100%;" title="Sáb"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card border p-3 mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0"><i class="bi bi-sliders me-2 text-primary"></i>Regras e Promoções (Precificação Dinâmica)</h6>
+                <span class="badge bg-secondary-subtle text-secondary">Limite de ajuste: 30%</span>
+              </div>
+
+              <label for="select-ajuste-demanda" class="form-label small text-muted">Ajuste por demanda</label>
+              <select id="select-ajuste-demanda" class="form-select">
+                <option value="0" selected>Sem ajuste (0% — Preço base)</option>
+                <option value="-10">-10% (Promoção baixa procura)</option>
+                <option value="10">+10% (Demanda moderada)</option>
+                <option value="20">+20% (Alta demanda)</option>
+                <option value="30">+30% (Lotação máxima — Limite)</option>
+              </select>
+              <div class="form-text text-muted">
+                <i class="bi bi-shield-check text-success me-1"></i>Prevenção de erros ativa: ajustes limitados a ±30%.
+              </div>
+            </div>
+
+            <div id="box-confirmacao-gestor" class="alert alert-warning border-warning d-none" role="alert">
+              <div class="d-flex align-items-start gap-2">
+                <i class="bi bi-exclamation-triangle-fill fs-5 text-warning"></i>
+                <div class="flex-grow-1">
+                  <h6 class="fw-bold mb-1">Confirmar alteração?</h6>
+                  <p id="texto-confirmacao-gestor" class="mb-2 small">
+                    Aplicar ajuste de +20% por demanda.
+                  </p>
+                  <div class="d-flex gap-2">
+                    <button id="btn-voltar-ajuste" type="button" class="btn btn-sm btn-outline-secondary">Voltar</button>
+                    <button id="btn-confirmar-ajuste" type="button" class="btn btn-sm btn-primary">Confirmar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="alerta-sucesso-gestor" class="alert alert-success d-none py-2 small mb-0" role="status">
+              <i class="bi bi-check-circle-fill me-1"></i>
+              <span id="texto-sucesso-gestor">Ajuste aplicado com sucesso e sincronizado com a Visão do Torcedor!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="modal fade" id="modalPagamento" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header text-white" style="background-color: #0b1e3b;">
+          <h5 class="modal-title"><i class="bi bi-check2-circle me-2"></i>Reserva Confirmada</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body" id="modal-pagamento-corpo"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/torcedor.js"></script>
+  <script src="js/gestor.js"></script>
+</body>
+</html>
