@@ -19,27 +19,32 @@
                 <span class="bolinha-verde"></span>
                 <span>Sessão ativa</span>
             </div>
-            <a href="gestor.html" class="btn btn-outline-light btn-sm">Área do Gestor</a>
+            <button type="button" class="btn btn-outline-light btn-sm" id="btn-alternar-visao">Área do Gestor</button>
         </div>
     </header>
 
     <main class="container-xl py-4">
-        <div class="caixa-painel shadow-sm">
+        <div class="caixa-painel shadow-sm" id="coluna-torcedor">
             <div class="barra-azul d-flex flex-wrap justify-content-between align-items-center px-4 py-2">
                 <div class="d-flex align-items-center gap-2 text-white fw-semibold">
                     <i class="bi bi-person-circle fs-5"></i>
                     <span>Visão do Torcedor</span>
                 </div>
-                <div class="d-flex gap-1 menu-abas">
-                    <button class="btn btn-sm active" type="button">Ingressos</button>
-                    <button class="btn btn-sm" type="button">Partidas</button>
-                    <button class="btn btn-sm" type="button">Minha conta</button>
+                <div class="d-flex gap-1 menu-abas" id="abas-torcedor">
+                    <button class="btn btn-sm active" type="button" data-aba="aba-torcedor-ingressos">Ingressos</button>
+                    <button class="btn btn-sm" type="button" data-aba="aba-torcedor-partidas">Partidas</button>
+                    <button class="btn btn-sm" type="button" data-aba="aba-torcedor-conta">Minha conta</button>
                 </div>
             </div>
 
-            <div class="p-3 p-md-4 bg-white">
+            <div class="p-3 p-md-4 bg-white conteudo-aba-torcedor" id="aba-torcedor-ingressos">
                 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-                    <h2 class="titulo-secao mb-0">Ingressos</h2>
+                    <div class="d-flex align-items-center gap-2">
+                        <h2 class="titulo-secao mb-0">Ingressos</h2>
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="btn-atalho-partidas">
+                            <i class="bi bi-arrow-left-right me-1"></i>Trocar partida
+                        </button>
+                    </div>
                     <span class="selo-demanda" id="torcedor-demand-badge">
                         <i class="bi bi-fire me-1"></i> Alta demanda
                     </span>
@@ -51,7 +56,8 @@
                             <div class="banner-sombra"></div>
                             <div class="banner-texto">
                                 <span class="barras-vermelhas fs-3">//</span>
-                                <span class="nome-times">Palmeiras × Corinthians</span>
+                                <span class="nome-times" id="nome-partida-atual">Palmeiras × Corinthians</span>
+                                <div class="small text-white-50 mt-1" id="local-partida-atual">Allianz Parque • Domingo, 16:00</div>
                             </div>
                         </div>
 
@@ -60,17 +66,17 @@
                             <div class="row align-items-center g-3">
                                 <div class="col-12 col-sm-7 d-flex align-items-center gap-2">
                                     <i class="bi bi-easel2 fs-5 text-primary"></i>
-                                    <select class="form-select fw-bold" id="select-setor">
-                                        <option value="" selected disabled>Selecione um setor...</option>
-                                        <option value="120">Cadeira inferior</option>
-                                        <option value="100">Arquibancada</option>
-                                        <option value="150">Cadeira superior</option>
+                                    <select class="form-select fw-bold" id="select-setor" autocomplete="off">
+                                        <option value="" selected disabled>Selecione o setor</option>
+                                        <option value="120">Cadeira inferior — R$ 120,00</option>
+                                        <option value="80">Arquibancada — R$ 80,00</option>
+                                        <option value="160">Cadeira superior — R$ 160,00</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-5">
                                     <div class="input-group">
                                         <span class="input-group-text bg-light text-muted small">Qtd.</span>
-                                        <input type="number" class="form-control fw-bold" id="select-quantidade" placeholder="0" min="1" max="50">
+                                        <input type="number" class="form-control fw-bold" id="select-qtd" value="0" min="0" max="50" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +90,7 @@
 
                                 <div id="aviso-sem-selecao" class="text-center text-muted py-4 px-2">
                                     <i class="bi bi-ticket-perforated fs-2 d-block mb-2 text-primary"></i>
-                                    <p class="small mb-0">Selecione o setor e a quantidade de ingressos ao lado para reservar o preço.</p>
+                                    <p class="small mb-0">Selecione o setor e informe a quantidade de ingressos para calcular o valor.</p>
                                 </div>
 
                                 <div class="box-preco-reservado d-flex justify-content-between align-items-center p-3 mb-3 d-none" id="box-reserva-ativa">
@@ -97,20 +103,225 @@
                                             <div class="text-muted small">Válido por 5 minutos</div>
                                         </div>
                                     </div>
-                                    <div class="relogio-preco" id="price-timer">05:00</div>
+                                    <div class="relogio-preco" id="timer-reserva">04:59</div>
                                 </div>
                             </div>
 
                             <div id="area-total-pagamento" class="d-none">
+                                <div class="mb-1">
+                                    <span id="badge-ajuste-ativo" class="badge bg-info text-dark d-none"></span>
+                                </div>
                                 <div class="d-flex justify-content-between align-items-center mb-3 px-1">
-                                    <span class="fs-5 fw-semibold">Total</span>
-                                    <span class="fs-3 fw-bold" id="torcedor-total">R$ 0,00</span>
+                                    <span class="fs-5 fw-semibold">Resumo</span>
+                                    <span class="fs-3 fw-bold" id="valor-total">Total: R$ 0,00</span>
                                 </div>
 
-                                <button type="button" class="btn btn-primary btn-lg w-100 fw-semibold botao-pagamento" id="btn-ir-pagamento">
+                                <button type="button" class="btn btn-primary btn-lg w-100 fw-semibold botao-pagamento" id="btn-abrir-checkout">
                                     Ir para pagamento
                                 </button>
+                                <button type="button" class="d-none" id="btn-ir-pagamento"></button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 p-md-4 bg-white conteudo-aba-torcedor d-none" id="aba-torcedor-partidas">
+                <h2 class="titulo-secao mb-3">Partidas Disponíveis — Paulistão 2027</h2>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-warning text-dark mb-1">Alta demanda</span>
+                                <h6 class="fw-bold mb-1">Palmeiras × Corinthians</h6>
+                                <small class="text-muted">Allianz Parque • Domingo, 16:00</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary btn-selecionar-jogo"
+                                data-jogo="Palmeiras × Corinthians"
+                                data-local="Allianz Parque • Domingo, 16:00"
+                                data-demanda="Alta demanda">Selecionar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-info text-dark mb-1">Demanda moderada</span>
+                                <h6 class="fw-bold mb-1">São Paulo × Santos</h6>
+                                <small class="text-muted">MorumBIS • Quarta-feira, 21:30</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-selecionar-jogo"
+                                data-jogo="São Paulo × Santos"
+                                data-local="MorumBIS • Quarta-feira, 21:30"
+                                data-demanda="Demanda moderada">Selecionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 p-md-4 bg-white conteudo-aba-torcedor d-none" id="aba-torcedor-conta">
+                <h2 class="titulo-secao mb-3">Meus Ingressos Confirmados</h2>
+                <div id="lista-meus-ingressos" class="text-muted small">
+                    Nenhum ingresso comprado nesta sessão ainda.
+                </div>
+            </div>
+        </div>
+
+        <div class="caixa-painel shadow-sm d-none" id="coluna-gestor">
+            <div class="barra-azul d-flex flex-wrap justify-content-between align-items-center px-4 py-2">
+                <div class="d-flex align-items-center gap-2 text-white fw-semibold">
+                    <i class="bi bi-building fs-5"></i>
+                    <span>Visão do Gestor</span>
+                </div>
+                <div class="d-flex gap-1 menu-abas" id="abas-gestor">
+                    <button class="btn btn-sm active" type="button" data-aba="aba-gestor-arenas">Gestão de arenas</button>
+                    <button class="btn btn-sm" type="button" data-aba="aba-gestor-relatorios">Relatórios</button>
+                    <button class="btn btn-sm" type="button" data-aba="aba-gestor-config">Configurações</button>
+                </div>
+            </div>
+
+            <div class="p-3 p-md-4 bg-white conteudo-aba-gestor" id="aba-gestor-arenas">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-5">
+                        <div class="card-borda h-100 p-3">
+                            <span class="text-muted small fw-semibold">Ocupação Atual</span>
+                            <div class="d-flex align-items-baseline gap-2 mt-1">
+                                <span id="kpi-ocupacao" class="display-6 fw-bold text-danger">72%</span>
+                                <span class="badge bg-danger-subtle text-danger">Alta</span>
+                            </div>
+                            <small class="text-muted mt-2 d-block">Meta operacional: 80%</small>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="card-borda h-100 p-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <span class="text-muted small fw-semibold">Ingressos vendidos</span>
+                                    <h3 id="kpi-vendidos" class="fw-bold text-primary mb-0">18.450</h3>
+                                </div>
+                                <span class="badge bg-primary-subtle text-primary">+14% hoje</span>
+                            </div>
+
+                            <div class="d-flex align-items-end gap-2 mt-3" style="height: 55px;" aria-label="Gráfico de crescimento de vendas">
+                                <div class="bg-primary opacity-25 rounded-top flex-fill" style="height: 30%;" title="Seg"></div>
+                                <div class="bg-primary opacity-50 rounded-top flex-fill" style="height: 45%;" title="Ter"></div>
+                                <div class="bg-primary opacity-50 rounded-top flex-fill" style="height: 60%;" title="Qua"></div>
+                                <div class="bg-primary opacity-75 rounded-top flex-fill" style="height: 75%;" title="Qui"></div>
+                                <div class="bg-primary opacity-75 rounded-top flex-fill" style="height: 88%;" title="Sex"></div>
+                                <div class="bg-primary rounded-top flex-fill" style="height: 100%;" title="Sáb"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-borda p-3 mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-sliders me-2 text-primary"></i>Regras e Promoções (Precificação Dinâmica)</h6>
+                        <span class="badge bg-secondary-subtle text-secondary">Limite de ajuste: ±30%</span>
+                    </div>
+
+                    <label for="select-ajuste-demanda" class="form-label small text-muted">Ajuste por demanda</label>
+                    <select id="select-ajuste-demanda" class="form-select">
+                        <option value="0" selected>Sem ajuste (0% — Preço base)</option>
+                        <option value="-10">-10% (Promoção baixa procura)</option>
+                        <option value="-20">-20% (Promoção ocupação reduzida)</option>
+                        <option value="-30">-30% (Promoção máxima — Limite)</option>
+                        <option value="10">+10% (Demanda moderada)</option>
+                        <option value="20">+20% (Alta demanda)</option>
+                        <option value="30">+30% (Lotação máxima — Limite)</option>
+                    </select>
+                    <div class="form-text text-muted">
+                        <i class="bi bi-shield-check text-success me-1"></i>Prevenção de erros ativa: ajustes limitados a ±30%.
+                    </div>
+                </div>
+
+                <div id="box-confirmacao-gestor" class="alert alert-warning border-warning d-none" role="alert">
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="bi bi-exclamation-triangle-fill fs-5 text-warning"></i>
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold mb-1">Confirmar alteração?</h6>
+                            <p id="texto-confirmacao-gestor" class="mb-2 small">
+                                Aplicar ajuste de +20% por demanda.
+                            </p>
+                            <div class="d-flex gap-2">
+                                <button id="btn-voltar-ajuste" type="button" class="btn btn-sm btn-outline-secondary">Voltar</button>
+                                <button id="btn-confirmar-ajuste" type="button" class="btn btn-sm btn-primary">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="alerta-sucesso-gestor" class="alert alert-success d-none py-2 small mb-0" role="status">
+                    <i class="bi bi-check-circle-fill me-1"></i>
+                    <span id="texto-sucesso-gestor">Ajuste aplicado com sucesso e sincronizado com a Visão do Torcedor!</span>
+                </div>
+            </div>
+
+            <div class="p-3 p-md-4 bg-white conteudo-aba-gestor d-none" id="aba-gestor-relatorios">
+                <h2 class="titulo-secao mb-3">Relatório de Ocupação e Receita por Setor</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Setor</th>
+                                <th>Capacidade</th>
+                                <th>Vendidos</th>
+                                <th>Ocupação</th>
+                                <th>Receita Estimada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Arquibancada</td>
+                                <td>12.000</td>
+                                <td>9.600</td>
+                                <td><span class="badge bg-success">80%</span></td>
+                                <td>R$ 768.000,00</td>
+                            </tr>
+                            <tr>
+                                <td>Cadeira inferior</td>
+                                <td>8.000</td>
+                                <td>5.850</td>
+                                <td><span class="badge bg-warning text-dark">73%</span></td>
+                                <td>R$ 702.000,00</td>
+                            </tr>
+                            <tr>
+                                <td>Cadeira superior</td>
+                                <td>5.600</td>
+                                <td>3.000</td>
+                                <td><span class="badge bg-info text-dark">54%</span></td>
+                                <td>R$ 480.000,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="p-3 p-md-4 bg-white conteudo-aba-gestor d-none" id="aba-gestor-config">
+                <h2 class="titulo-secao mb-3">Configurações de Precificação Dinâmica</h2>
+                <div class="card-borda p-3">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Teto máximo de variação automática</label>
+                            <input type="text" class="form-control" value="±30% (Regra FPF)" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Tempo de trava de preço no carrinho</label>
+                            <input type="number" class="form-control" id="config-tempo-reserva" value="5" min="1" max="15">
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="check-confirmacao-obrigatoria" checked>
+                                <label class="form-check-label small" for="check-confirmacao-obrigatoria">
+                                    Exigir confirmação preventiva antes de aplicar reajustes de preço
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary btn-sm" id="btn-salvar-config">Salvar configurações</button>
+                            <span id="msg-config-salva" class="text-success small ms-2 d-none">
+                                <i class="bi bi-check-circle-fill"></i> Configurações atualizadas!
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -118,7 +329,244 @@
         </div>
     </main>
 
+    <div class="modal fade" id="modalPagamento" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #0b1e3b;">
+                    <h5 class="modal-title"><i class="bi bi-credit-card me-2"></i>Finalizar Pagamento</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="modal-pagamento-corpo"></div>
+                <div class="modal-footer" id="modal-pagamento-rodape">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success fw-semibold" id="btn-confirmar-pagamento-final">
+                        <i class="bi bi-check-circle me-1"></i>Confirmar Pagamento
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/torcedor.js"></script>
+    <script src="js/gestor.js"></script>
+    <script>
+        const inputQtd = document.getElementById('select-qtd');
+        const selectSetorEl = document.getElementById('select-setor');
+        const avisoInicial = document.getElementById('aviso-sem-selecao');
+        const boxReserva = document.getElementById('box-reserva-ativa');
+        const areaPagamento = document.getElementById('area-total-pagamento');
+        const btnAlternar = document.getElementById('btn-alternar-visao');
+        const painelTorcedor = document.getElementById('coluna-torcedor');
+        const painelGestor = document.getElementById('coluna-gestor');
+
+        function resetarSelecaoTorcedor() {
+            selectSetorEl.options[0].textContent = 'Selecione o setor';
+            selectSetorEl.selectedIndex = 0;
+            inputQtd.value = '0';
+            document.getElementById('valor-total').textContent = 'Total: R$ 0,00';
+            verificarExibicaoReserva();
+        }
+
+        window.addEventListener('DOMContentLoaded', resetarSelecaoTorcedor);
+
+        function recalcularResumoSeguro() {
+            const precoBase = parseFloat(selectSetorEl.value);
+            const qtd = parseInt(inputQtd.value, 10) || 0;
+            const ajuste = (window.ArenaPassState && window.ArenaPassState.percentualAjuste) || 0;
+            const fator = 1 + ajuste / 100;
+
+            Array.from(selectSetorEl.options).forEach((opt) => {
+                if (!opt.value) {
+                    opt.textContent = 'Selecione o setor';
+                    return;
+                }
+                const base = parseFloat(opt.value);
+                const nomeSetor = opt.textContent.split('—')[0].trim();
+                const valorFormatado = (base * fator).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                opt.textContent = `${nomeSetor} — ${valorFormatado}`;
+            });
+
+            if (!isNaN(precoBase) && qtd > 0) {
+                const total = precoBase * fator * qtd;
+                document.getElementById('valor-total').textContent =
+                    'Total: ' + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+                const badgeAjuste = document.getElementById('badge-ajuste-ativo');
+                if (ajuste !== 0) {
+                    const sinal = ajuste > 0 ? '+' : '';
+                    badgeAjuste.textContent = `Ajuste demanda: ${sinal}${ajuste}%`;
+                    badgeAjuste.classList.remove('d-none');
+                } else {
+                    badgeAjuste.classList.add('d-none');
+                }
+            }
+        }
+
+        function verificarExibicaoReserva() {
+            const setorSelecionado = selectSetorEl.value !== '';
+            const qtd = parseInt(inputQtd.value, 10) || 0;
+
+            if (setorSelecionado && qtd > 0) {
+                avisoInicial.classList.add('d-none');
+                boxReserva.classList.remove('d-none');
+                areaPagamento.classList.remove('d-none');
+                recalcularResumoSeguro();
+            } else {
+                avisoInicial.classList.remove('d-none');
+                boxReserva.classList.add('d-none');
+                areaPagamento.classList.add('d-none');
+                if (!setorSelecionado) {
+                    selectSetorEl.options[0].textContent = 'Selecione o setor';
+                }
+            }
+        }
+
+        inputQtd.addEventListener('input', verificarExibicaoReserva);
+        inputQtd.addEventListener('change', verificarExibicaoReserva);
+        selectSetorEl.addEventListener('change', verificarExibicaoReserva);
+
+        btnAlternar.addEventListener('click', () => {
+            const mostrandoGestor = !painelGestor.classList.contains('d-none');
+            if (mostrandoGestor) {
+                painelGestor.classList.add('d-none');
+                painelTorcedor.classList.remove('d-none');
+                btnAlternar.textContent = 'Área do Gestor';
+                recalcularResumoSeguro();
+            } else {
+                painelTorcedor.classList.add('d-none');
+                painelGestor.classList.remove('d-none');
+                btnAlternar.textContent = 'Área do Torcedor';
+            }
+        });
+
+        function configurarAbas(containerId, classeConteudo) {
+            const botoes = document.querySelectorAll(`#${containerId} button`);
+            const conteudos = document.querySelectorAll(`.${classeConteudo}`);
+            botoes.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    botoes.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const alvo = btn.dataset.aba;
+                    conteudos.forEach(c => c.classList.toggle('d-none', c.id !== alvo));
+                });
+            });
+        }
+        configurarAbas('abas-torcedor', 'conteudo-aba-torcedor');
+        configurarAbas('abas-gestor', 'conteudo-aba-gestor');
+
+        document.getElementById('btn-atalho-partidas').addEventListener('click', () => {
+            document.querySelector('#abas-torcedor button[data-aba="aba-torcedor-partidas"]').click();
+        });
+
+        document.querySelectorAll('.btn-selecionar-jogo').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('nome-partida-atual').textContent = btn.dataset.jogo;
+                document.getElementById('local-partida-atual').textContent = btn.dataset.local;
+                document.getElementById('torcedor-demand-badge').innerHTML =
+                    `<i class="bi bi-fire me-1"></i> ${btn.dataset.demanda}`;
+                resetarSelecaoTorcedor();
+                recalcularResumoSeguro();
+                document.querySelector('#abas-torcedor button[data-aba="aba-torcedor-ingressos"]').click();
+            });
+        });
+
+        document.getElementById('btn-salvar-config').addEventListener('click', () => {
+            const minutos = parseInt(document.getElementById('config-tempo-reserva').value, 10) || 5;
+            if (window.ArenaPassState) {
+                window.ArenaPassState.tempoRestante = minutos * 60 - 1;
+            }
+            const msg = document.getElementById('msg-config-salva');
+            msg.classList.remove('d-none');
+            setTimeout(() => msg.classList.add('d-none'), 3000);
+        });
+
+        const modalEl = document.getElementById('modalPagamento');
+        const modalBootstrap = new bootstrap.Modal(modalEl);
+        let dadosCompraAtual = null;
+        let compraConfirmada = false;
+
+        document.getElementById('btn-abrir-checkout').addEventListener('click', () => {
+            const qtd = parseInt(inputQtd.value, 10) || 0;
+            if (!selectSetorEl.value || qtd < 1) return;
+
+            compraConfirmada = false;
+            const partida = document.getElementById('nome-partida-atual').textContent;
+            const setorTexto = selectSetorEl.options[selectSetorEl.selectedIndex].text;
+            const totalTexto = document.getElementById('valor-total').textContent;
+            const tempoTexto = document.getElementById('timer-reserva').textContent;
+
+            dadosCompraAtual = { partida, setorTexto, qtd, totalTexto };
+
+            document.getElementById('modal-pagamento-corpo').innerHTML = `
+                <p class="mb-2"><strong>Partida:</strong> ${partida}</p>
+                <p class="mb-2"><strong>Setor:</strong> ${setorTexto}</p>
+                <p class="mb-2"><strong>Quantidade:</strong> ${qtd} ingresso(s)</p>
+                <p class="mb-3 fs-5"><strong>${totalTexto}</strong></p>
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Forma de pagamento</label>
+                    <select class="form-select form-select-sm" id="forma-pagamento-select">
+                        <option value="PIX (Aprovação imediata)">PIX (Aprovação imediata)</option>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    </select>
+                </div>
+                <div class="alert alert-info py-2 mb-0 small">
+                    Preço garantido dentro da janela de reserva (${tempoTexto} restantes).
+                </div>
+            `;
+            document.getElementById('btn-confirmar-pagamento-final').classList.remove('d-none');
+            modalBootstrap.show();
+        });
+
+        document.getElementById('btn-confirmar-pagamento-final').addEventListener('click', () => {
+            if (!dadosCompraAtual) return;
+            compraConfirmada = true;
+            const forma = document.getElementById('forma-pagamento-select').value;
+            const codigo = 'AP-' + Math.floor(100000 + Math.random() * 900000);
+
+            document.getElementById('modal-pagamento-corpo').innerHTML = `
+                <div class="text-center py-2">
+                    <i class="bi bi-check-circle-fill text-success display-4 mb-2"></i>
+                    <h5 class="fw-bold text-success">Pagamento Confirmado!</h5>
+                    <p class="small text-muted mb-3">Código do ingresso: <strong>${codigo}</strong></p>
+                    <div class="card-borda p-3 text-start small bg-light">
+                        <div><strong>Partida:</strong> ${dadosCompraAtual.partida}</div>
+                        <div><strong>Setor:</strong> ${dadosCompraAtual.setorTexto}</div>
+                        <div><strong>Quantidade:</strong> ${dadosCompraAtual.qtd}</div>
+                        <div><strong>Pagamento:</strong> ${forma}</div>
+                        <div class="mt-1 fw-bold">${dadosCompraAtual.totalTexto}</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('btn-confirmar-pagamento-final').classList.add('d-none');
+
+            const listaIngressos = document.getElementById('lista-meus-ingressos');
+            if (listaIngressos.textContent.includes('Nenhum ingresso')) {
+                listaIngressos.innerHTML = '';
+            }
+            listaIngressos.innerHTML += `
+                <div class="card-borda p-3 mb-2 d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong class="text-dark">${dadosCompraAtual.partida}</strong> — ${dadosCompraAtual.setorTexto} (${dadosCompraAtual.qtd}x)
+                        <div class="text-muted small">Código: ${codigo} • ${forma}</div>
+                    </div>
+                    <span class="badge bg-success">Confirmado</span>
+                </div>
+            `;
+
+            const kpiVendidos = document.getElementById('kpi-vendidos');
+            if (kpiVendidos) {
+                const atual = parseInt(kpiVendidos.textContent.replace(/\./g, ''), 10) || 18450;
+                kpiVendidos.textContent = (atual + dadosCompraAtual.qtd).toLocaleString('pt-BR');
+            }
+        });
+
+        modalEl.addEventListener('hidden.bs.modal', () => {
+            if (compraConfirmada) {
+                resetarSelecaoTorcedor();
+                compraConfirmada = false;
+            }
+        });
+    </script>
 </body>
 </html>
