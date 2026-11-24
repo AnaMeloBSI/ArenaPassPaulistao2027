@@ -49,7 +49,8 @@ A interface atual (Versão 2) foi refinada a partir de uma Avaliação Heurísti
 ---
 
 ## Objetivo
-Projeto acadêmico desenvolvido na disciplina de **Interface Homem-Máquina** (Bacharelado em Sistemas de Informação — IFNMG Campus Januária), ministrada pelo Prof. Felipe Mota, aplicando na prática conceitos de UI/UX, Avaliação Heurística e Testes de Usabilidade.
+Projeto acadêmico desenvolvido na disciplina de **Interface Homem-Máquina** (Bacharelado em Sistemas de Informação — IFNMG Campus Januária), ministrada pelo Prof. Postada por Felipe Augusto Oliveira Mota felipe.mota
+Felipe Augusto Oliveira Mota, aplicando na prática conceitos de UI/UX, Avaliação Heurística e Testes de Usabilidade.
 
 ---
 
