@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArenaPass - Paulistão 2027</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="topo-sistema d-flex justify-content-between align-items-center px-4 py-2">
+        <div class="d-flex align-items-center gap-3">
+            <span class="logo-texto"><span class="barras-vermelhas">//</span> PAULISTÃO 2027</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2 text-white small">
+                <span class="bolinha-verde"></span>
+                <span>Sessão ativa</span>
+            </div>
+            <a href="gestor.html" class="btn btn-outline-light btn-sm">Área do Gestor</a>
+        </div>
+    </header>
+
+    <main class="container-xl py-4">
+        <div class="caixa-painel shadow-sm">
+            <div class="barra-azul d-flex flex-wrap justify-content-between align-items-center px-4 py-2">
+                <div class="d-flex align-items-center gap-2 text-white fw-semibold">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span>Visão do Torcedor</span>
+                </div>
+                <div class="d-flex gap-1 menu-abas">
+                    <button class="btn btn-sm active" type="button">Ingressos</button>
+                    <button class="btn btn-sm" type="button">Partidas</button>
+                    <button class="btn btn-sm" type="button">Minha conta</button>
+                </div>
+            </div>
+
+            <div class="p-3 p-md-4 bg-white">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <h2 class="titulo-secao mb-0">Ingressos</h2>
+                    <span class="selo-demanda" id="torcedor-demand-badge">
+                        <i class="bi bi-fire me-1"></i> Alta demanda
+                    </span>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-lg-7">
+                        <div class="banner-jogo mb-3 d-flex align-items-center justify-content-center text-center">
+                            <div class="banner-sombra"></div>
+                            <div class="banner-texto">
+                                <span class="barras-vermelhas fs-3">//</span>
+                                <span class="nome-times">Palmeiras × Corinthians</span>
+                            </div>
+                        </div>
+
+                        <div class="card-borda p-3">
+                            <label class="text-muted small d-block mb-2">Escolha o setor e a quantidade</label>
+                            <div class="row align-items-center g-3">
+                                <div class="col-12 col-sm-7 d-flex align-items-center gap-2">
+                                    <i class="bi bi-easel2 fs-5 text-primary"></i>
+                                    <select class="form-select fw-bold" id="select-setor">
+                                        <option value="" selected disabled>Selecione um setor...</option>
+                                        <option value="120">Cadeira inferior</option>
+                                        <option value="100">Arquibancada</option>
+                                        <option value="150">Cadeira superior</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-5">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted small">Qtd.</span>
+                                        <input type="number" class="form-control fw-bold" id="select-quantidade" placeholder="0" min="1" max="50">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="card-borda p-3 h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <h3 class="fs-6 fw-bold text-muted mb-3">Resumo da reserva</h3>
+
+                                <div id="aviso-sem-selecao" class="text-center text-muted py-4 px-2">
+                                    <i class="bi bi-ticket-perforated fs-2 d-block mb-2 text-primary"></i>
+                                    <p class="small mb-0">Selecione o setor e a quantidade de ingressos ao lado para reservar o preço.</p>
+                                </div>
+
+                                <div class="box-preco-reservado d-flex justify-content-between align-items-center p-3 mb-3 d-none" id="box-reserva-ativa">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="icone-cadeado">
+                                            <i class="bi bi-lock-fill fs-4 text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">Preço reservado</div>
+                                            <div class="text-muted small">Válido por 5 minutos</div>
+                                        </div>
+                                    </div>
+                                    <div class="relogio-preco" id="price-timer">05:00</div>
+                                </div>
+                            </div>
+
+                            <div id="area-total-pagamento" class="d-none">
+                                <div class="d-flex justify-content-between align-items-center mb-3 px-1">
+                                    <span class="fs-5 fw-semibold">Total</span>
+                                    <span class="fs-3 fw-bold" id="torcedor-total">R$ 0,00</span>
+                                </div>
+
+                                <button type="button" class="btn btn-primary btn-lg w-100 fw-semibold botao-pagamento" id="btn-ir-pagamento">
+                                    Ir para pagamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/torcedor.js"></script>
+</body>
+</html>

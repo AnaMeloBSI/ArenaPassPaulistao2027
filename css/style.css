@@ -1,0 +1,140 @@
+body {
+    background-color: #f1f5f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1e293b;
+}
+
+.topo-sistema {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+.logo-texto {
+    font-weight: 800;
+    font-size: 1.15rem;
+}
+
+.barras-vermelhas {
+    color: #dc2626;
+    font-weight: 900;
+    margin-right: 4px;
+}
+
+.texto-demo {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
+
+.bolinha-verde {
+    width: 10px;
+    height: 10px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.caixa-painel {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+}
+
+.barra-azul {
+    background-color: #1d4ed8;
+}
+
+.menu-abas .btn {
+    color: #dbeafe;
+    font-size: 0.88rem;
+    border: none;
+}
+
+.menu-abas .btn.active {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.titulo-secao {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.banner-jogo {
+    position: relative;
+    height: 135px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-image: url('https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1000&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.banner-sombra {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+}
+
+.banner-texto {
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+}
+
+.nome-times {
+    font-size: 1.55rem;
+    font-weight: 700;
+}
+
+.selo-demanda {
+    display: inline-block;
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.card-borda {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.box-preco-reservado {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+}
+
+.icone-cadeado {
+    width: 42px;
+    height: 42px;
+    background-color: #dbeafe;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.relogio-preco {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #1d4ed8;
+}
+
+.botao-pagamento {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+    border-radius: 8px;
+}
+
+.botao-pagamento:hover {
+    background-color: #1e40af;
+    border-color: #1e40af;
+}
