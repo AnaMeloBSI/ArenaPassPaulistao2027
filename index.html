@@ -100,7 +100,7 @@
                                         </div>
                                         <div>
                                             <div class="fw-bold text-dark">Preço reservado</div>
-                                            <div class="text-muted small">Válido por 5 minutos</div>
+                                            <div class="text-muted small" id="texto-validade-reserva">Válido por 5 minutos</div>
                                         </div>
                                     </div>
                                     <div class="relogio-preco" id="timer-reserva">04:59</div>
@@ -127,32 +127,99 @@
             </div>
 
             <div class="p-3 p-md-4 bg-white conteudo-aba-torcedor d-none" id="aba-torcedor-partidas">
-                <h2 class="titulo-secao mb-3">Partidas Disponíveis — Paulistão 2027</h2>
-                <div class="row g-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <h2 class="titulo-secao mb-0">Partidas Disponíveis — Paulistão 2027</h2>
+                    <span class="text-muted small">6 partidas cadastradas (Clássicos e Interior)</span>
+                </div>
+
+                <h6 class="text-uppercase text-muted fw-bold small mb-2">Clássicos & Times da Capital</h6>
+                <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <div class="card-borda p-3 d-flex justify-content-between align-items-center">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center h-100">
                             <div>
                                 <span class="badge bg-warning text-dark mb-1">Alta demanda</span>
                                 <h6 class="fw-bold mb-1">Palmeiras × Corinthians</h6>
                                 <small class="text-muted">Allianz Parque • Domingo, 16:00</small>
                             </div>
                             <button type="button" class="btn btn-sm btn-primary btn-selecionar-jogo"
+                                data-id="palmeiras-corinthians"
                                 data-jogo="Palmeiras × Corinthians"
                                 data-local="Allianz Parque • Domingo, 16:00"
                                 data-demanda="Alta demanda">Selecionar</button>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card-borda p-3 d-flex justify-content-between align-items-center">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center h-100">
                             <div>
                                 <span class="badge bg-info text-dark mb-1">Demanda moderada</span>
                                 <h6 class="fw-bold mb-1">São Paulo × Santos</h6>
                                 <small class="text-muted">MorumBIS • Quarta-feira, 21:30</small>
                             </div>
                             <button type="button" class="btn btn-sm btn-outline-primary btn-selecionar-jogo"
+                                data-id="saopaulo-santos"
                                 data-jogo="São Paulo × Santos"
                                 data-local="MorumBIS • Quarta-feira, 21:30"
                                 data-demanda="Demanda moderada">Selecionar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <span class="badge bg-warning text-dark mb-1">Alta demanda</span>
+                                <h6 class="fw-bold mb-1">Corinthians × São Paulo</h6>
+                                <small class="text-muted">Neo Química Arena • Domingo, 18:30</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-selecionar-jogo"
+                                data-id="corinthians-saopaulo"
+                                data-jogo="Corinthians × São Paulo"
+                                data-local="Neo Química Arena • Domingo, 18:30"
+                                data-demanda="Alta demanda">Selecionar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="text-uppercase text-muted fw-bold small mb-2">Confrontos do Interior</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <span class="badge bg-secondary mb-1">Baixa procura</span>
+                                <h6 class="fw-bold mb-1">Novorizontino × Mirassol</h6>
+                                <small class="text-muted">Jorge Ismael de Biasi • Sábado, 16:00</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-selecionar-jogo"
+                                data-id="novorizontino-mirassol"
+                                data-jogo="Novorizontino × Mirassol"
+                                data-local="Jorge Ismael de Biasi • Sábado, 16:00"
+                                data-demanda="Baixa procura">Selecionar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <span class="badge bg-secondary mb-1">Baixa procura</span>
+                                <h6 class="fw-bold mb-1">Ponte Preta × Guarani</h6>
+                                <small class="text-muted">Moisés Lucarelli • Sábado, 19:00</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-selecionar-jogo"
+                                data-id="pontepreta-guarani"
+                                data-jogo="Ponte Preta × Guarani"
+                                data-local="Moisés Lucarelli • Sábado, 19:00"
+                                data-demanda="Baixa procura">Selecionar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-borda p-3 d-flex justify-content-between align-items-center h-100">
+                            <div>
+                                <span class="badge bg-secondary mb-1">Baixa procura</span>
+                                <h6 class="fw-bold mb-1">Ituano × São Bernardo</h6>
+                                <small class="text-muted">Novelli Júnior • Quinta-feira, 19:30</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-selecionar-jogo"
+                                data-id="ituano-saobernardo"
+                                data-jogo="Ituano × São Bernardo"
+                                data-local="Novelli Júnior • Quinta-feira, 19:30"
+                                data-demanda="Baixa procura">Selecionar</button>
                         </div>
                     </div>
                 </div>
@@ -180,13 +247,27 @@
             </div>
 
             <div class="p-3 p-md-4 bg-white conteudo-aba-gestor" id="aba-gestor-arenas">
+                <div class="card-borda p-3 mb-3 bg-light">
+                    <label for="select-partida-gestor" class="form-label small fw-bold text-dark mb-1">
+                        <i class="bi bi-trophy me-1 text-primary"></i>Partida monitorada na arena
+                    </label>
+                    <select id="select-partida-gestor" class="form-select fw-semibold">
+                        <option value="palmeiras-corinthians" selected>Palmeiras × Corinthians — Allianz Parque (Clássico)</option>
+                        <option value="saopaulo-santos">São Paulo × Santos — MorumBIS (Clássico)</option>
+                        <option value="corinthians-saopaulo">Corinthians × São Paulo — Neo Química Arena (Clássico)</option>
+                        <option value="novorizontino-mirassol">Novorizontino × Mirassol — Jorge Ismael de Biasi (Interior)</option>
+                        <option value="pontepreta-guarani">Ponte Preta × Guarani — Moisés Lucarelli (Interior)</option>
+                        <option value="ituano-saobernardo">Ituano × São Bernardo — Novelli Júnior (Interior)</option>
+                    </select>
+                </div>
+
                 <div class="row g-3 mb-4">
                     <div class="col-md-5">
                         <div class="card-borda h-100 p-3">
                             <span class="text-muted small fw-semibold">Ocupação Atual</span>
                             <div class="d-flex align-items-baseline gap-2 mt-1">
                                 <span id="kpi-ocupacao" class="display-6 fw-bold text-danger">72%</span>
-                                <span class="badge bg-danger-subtle text-danger">Alta</span>
+                                <span id="kpi-badge-status" class="badge bg-danger-subtle text-danger">Alta</span>
                             </div>
                             <small class="text-muted mt-2 d-block">Meta operacional: 80%</small>
                         </div>
@@ -199,7 +280,7 @@
                                     <span class="text-muted small fw-semibold">Ingressos vendidos</span>
                                     <h3 id="kpi-vendidos" class="fw-bold text-primary mb-0">18.450</h3>
                                 </div>
-                                <span class="badge bg-primary-subtle text-primary">+14% hoje</span>
+                                <span id="kpi-tendencia" class="badge bg-primary-subtle text-primary">+14% hoje</span>
                             </div>
 
                             <div class="d-flex align-items-end gap-2 mt-3" style="height: 55px;" aria-label="Gráfico de crescimento de vendas">
@@ -217,7 +298,7 @@
                 <div class="card-borda p-3 mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h6 class="fw-bold mb-0"><i class="bi bi-sliders me-2 text-primary"></i>Regras e Promoções (Precificação Dinâmica)</h6>
-                        <span class="badge bg-secondary-subtle text-secondary">Limite de ajuste: ±30%</span>
+                        <span class="badge bg-secondary-subtle text-secondary" id="badge-teto-gestor">Limite de ajuste: ±30%</span>
                     </div>
 
                     <label for="select-ajuste-demanda" class="form-label small text-muted">Ajuste por demanda</label>
@@ -230,7 +311,7 @@
                         <option value="20">+20% (Alta demanda)</option>
                         <option value="30">+30% (Lotação máxima — Limite)</option>
                     </select>
-                    <div class="form-text text-muted">
+                    <div class="form-text text-muted" id="texto-prevencao-erros">
                         <i class="bi bi-shield-check text-success me-1"></i>Prevenção de erros ativa: ajustes limitados a ±30%.
                     </div>
                 </div>
@@ -258,7 +339,13 @@
             </div>
 
             <div class="p-3 p-md-4 bg-white conteudo-aba-gestor d-none" id="aba-gestor-relatorios">
-                <h2 class="titulo-secao mb-3">Relatório de Ocupação e Receita por Setor</h2>
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <div>
+                        <h2 class="titulo-secao mb-0">Relatório de Ocupação e Receita por Setor</h2>
+                        <small class="text-muted" id="relatorio-subtitulo-partida">Partida: Palmeiras × Corinthians • Allianz Parque</small>
+                    </div>
+                    <span class="badge bg-primary-subtle text-primary" id="relatorio-badge-ajuste">Preço base (0%)</span>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle mb-0">
                         <thead class="table-light">
@@ -267,32 +354,14 @@
                                 <th>Capacidade</th>
                                 <th>Vendidos</th>
                                 <th>Ocupação</th>
+                                <th>Valor Unitário</th>
                                 <th>Receita Estimada</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Arquibancada</td>
-                                <td>12.000</td>
-                                <td>9.600</td>
-                                <td><span class="badge bg-success">80%</span></td>
-                                <td>R$ 768.000,00</td>
-                            </tr>
-                            <tr>
-                                <td>Cadeira inferior</td>
-                                <td>8.000</td>
-                                <td>5.850</td>
-                                <td><span class="badge bg-warning text-dark">73%</span></td>
-                                <td>R$ 702.000,00</td>
-                            </tr>
-                            <tr>
-                                <td>Cadeira superior</td>
-                                <td>5.600</td>
-                                <td>3.000</td>
-                                <td><span class="badge bg-info text-dark">54%</span></td>
-                                <td>R$ 480.000,00</td>
-                            </tr>
+                        <tbody id="corpo-tabela-relatorios">
                         </tbody>
+                        <tfoot class="table-light fw-bold" id="rodape-tabela-relatorios">
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -302,12 +371,18 @@
                 <div class="card-borda p-3">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label small fw-semibold">Teto máximo de variação automática</label>
-                            <input type="text" class="form-control" value="±30% (Regra FPF)" readonly>
+                            <label for="config-teto-variacao" class="form-label small fw-semibold">Teto máximo de variação permitida</label>
+                            <select class="form-select" id="config-teto-variacao">
+                                <option value="10">±10% (Conservador)</option>
+                                <option value="20">±20% (Moderado)</option>
+                                <option value="30" selected>±30% (Padrão FPF)</option>
+                            </select>
+                            <div class="form-text small">Bloqueia opções acima do teto escolhido na Gestão de Arenas.</div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small fw-semibold">Tempo de trava de preço no carrinho</label>
+                            <label for="config-tempo-reserva" class="form-label small fw-semibold">Tempo de trava de preço no carrinho (minutos)</label>
                             <input type="number" class="form-control" id="config-tempo-reserva" value="5" min="1" max="15">
+                            <div class="form-text small">Atualiza o cronômetro de reserva do torcedor.</div>
                         </div>
                         <div class="col-12">
                             <div class="form-check form-switch">
@@ -437,6 +512,9 @@
                 painelTorcedor.classList.add('d-none');
                 painelGestor.classList.remove('d-none');
                 btnAlternar.textContent = 'Área do Torcedor';
+                if (window.ArenaPassState && typeof window.sincronizarPainelGestor === 'function') {
+                    window.sincronizarPainelGestor(window.ArenaPassState.partidaAtualId);
+                }
             }
         });
 
@@ -461,24 +539,24 @@
 
         document.querySelectorAll('.btn-selecionar-jogo').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.getElementById('nome-partida-atual').textContent = btn.dataset.jogo;
-                document.getElementById('local-partida-atual').textContent = btn.dataset.local;
-                document.getElementById('torcedor-demand-badge').innerHTML =
-                    `<i class="bi bi-fire me-1"></i> ${btn.dataset.demanda}`;
+                document.querySelectorAll('.btn-selecionar-jogo').forEach(b => {
+                    b.classList.replace('btn-primary', 'btn-outline-primary');
+                });
+                btn.classList.replace('btn-outline-primary', 'btn-primary');
+
+                if (typeof window.selecionarPartidaArenaPass === 'function') {
+                    window.selecionarPartidaArenaPass(btn.dataset.id);
+                } else {
+                    document.getElementById('nome-partida-atual').textContent = btn.dataset.jogo;
+                    document.getElementById('local-partida-atual').textContent = btn.dataset.local;
+                    document.getElementById('torcedor-demand-badge').innerHTML =
+                        `<i class="bi bi-fire me-1"></i> ${btn.dataset.demanda}`;
+                }
+
                 resetarSelecaoTorcedor();
                 recalcularResumoSeguro();
                 document.querySelector('#abas-torcedor button[data-aba="aba-torcedor-ingressos"]').click();
             });
-        });
-
-        document.getElementById('btn-salvar-config').addEventListener('click', () => {
-            const minutos = parseInt(document.getElementById('config-tempo-reserva').value, 10) || 5;
-            if (window.ArenaPassState) {
-                window.ArenaPassState.tempoRestante = minutos * 60 - 1;
-            }
-            const msg = document.getElementById('msg-config-salva');
-            msg.classList.remove('d-none');
-            setTimeout(() => msg.classList.add('d-none'), 3000);
         });
 
         const modalEl = document.getElementById('modalPagamento');
@@ -554,10 +632,15 @@
                 </div>
             `;
 
-            const kpiVendidos = document.getElementById('kpi-vendidos');
-            if (kpiVendidos) {
-                const atual = parseInt(kpiVendidos.textContent.replace(/\./g, ''), 10) || 18450;
-                kpiVendidos.textContent = (atual + dadosCompraAtual.qtd).toLocaleString('pt-BR');
+            if (window.ArenaPassState) {
+                const p = window.ArenaPassState.partidas[window.ArenaPassState.partidaAtualId];
+                if (p) {
+                    p.vendidos += dadosCompraAtual.qtd;
+                    p.ocupacao = Math.min(100, Math.round((p.vendidos / p.capacidadeTotal) * 100));
+                    if (typeof window.sincronizarPainelGestor === 'function') {
+                        window.sincronizarPainelGestor(window.ArenaPassState.partidaAtualId);
+                    }
+                }
             }
         });
 
